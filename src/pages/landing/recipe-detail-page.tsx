@@ -86,13 +86,12 @@ export function RecipeDetailPage() {
             onClick={() => setIsSaved(!isSaved)}
             variant="ghost"
             size="icon"
-            className="rounded-full backdrop-blur-md"
+            className="rounded-full backdrop-blur-md bg-yellow-300/20"
             style={{
-              backgroundColor: "rgba(255, 255, 255, 0.2)",
               color: isSaved ? "var(--brand-primary)" : "white",
             }}
           >
-            <Bookmark className={`w-5 h-5 ${isSaved ? "fill-current" : ""}`} />
+            <Bookmark className={`w-5 h-5 ${isSaved ? "fill-yellow-200" : ""}`} />
           </Button>
           <Button
             onClick={() => setIsLiked(!isLiked)}

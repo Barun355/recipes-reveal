@@ -30,10 +30,11 @@ export function LoginPage() {
     } else if (formData.password.length < 6) {
       newErrors.password = "Password must be at least 6 characters";
     }
-
+    
     setErrors(newErrors);
-
-    if (Object.keys(newErrors).length === 0) {
+    
+    if (newErrors.email === "" && newErrors.password === "") {
+      console.log('submit')
       // Successful login - in a real app, this would call an API
       console.log("Login successful:", formData);
       const session = await loginUser({

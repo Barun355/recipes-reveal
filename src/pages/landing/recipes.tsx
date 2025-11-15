@@ -12,23 +12,18 @@ import { RecipeIngredientCombobox } from "@/components/RecipeIngredientCombobox"
 import { Label } from "@/components/ui/label";
 
 export function RecipesPage() {
+  const navigate = useNavigate();
+  const { recipes, groups, getAllIngredients } = useRecipes();
+
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedCategories, setSelectedCategories] = useState([
-    "vegan",
-    "non-veg",
-    "veg",
-  ]);
+  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedPopularity, setSelectedPopularity] = useState<string[]>([]);
   const [selectedSortBy, setSelectedSortBy] = useState<string[]>([]);
   const [showFilters, setShowFilters] = useState(true);
   const [filteredAndSortedRecipes, setFilteredAndSortedRecipes] = useState<
     Recipes[]
-  >([]);
+  >(recipes || []);
   const [selectedIngredients, setSelectedIngredients] = useState([]);
-
-  const navigate = useNavigate();
-
-  const { recipes, groups, getAllIngredients } = useRecipes();
 
   const onRecipeClick = (recipe: Recipes) => {
     navigate(`/recipes/${recipe.id}`);
@@ -58,8 +53,20 @@ export function RecipesPage() {
     );
   };
 
+  // Initialize filtered recipes when store recipes change
   useEffect(() => {
-    const newRecipes = filteredAndSortedRecipes.filter((item) => {
+    if (recipes && recipes.length > 0) {
+      setFilteredAndSortedRecipes(recipes);
+    }
+  }, [recipes]);
+
+  // Ingredient based filters
+  useEffect(() => {
+    if (selectedIngredients.length === 0) {
+      setFilteredAndSortedRecipes(recipes);
+      return;
+    }
+    const newRecipes = recipes.filter((item) => {
       const check = item.ingredients.find((ing) =>
         checkIngrident(
           ing.name.replace(" ", "-").toLowerCase().trim(),
@@ -73,17 +80,20 @@ export function RecipesPage() {
         false;
       }
     });
-    setFilteredAndSortedRecipes(newRecipes)
-  }, [selectedIngredients]);
+    console.log("newRecipes: ", newRecipes);
+    setFilteredAndSortedRecipes(newRecipes);
+  }, [selectedIngredients, recipes]);
 
+  // Filter logic for search, category, popularity, and sorting
   useEffect(() => {
     let filtered = recipes.filter((recipe) => {
-      if (
-        recipe.categories.filter((cat) =>
+      // Category filter
+      if (selectedCategories.length > 0) {
+        const hasCategoryMatch = recipe.categories.some((cat) =>
           selectedCategories.includes(cat.value)
-        ).length === 0
-      )
-        return false;
+        );
+        if (!hasCategoryMatch) return false;
+      }
 
       // Search filter
       if (
@@ -95,16 +105,24 @@ export function RecipesPage() {
 
       // Popularity filter
       if (selectedPopularity.length > 0) {
-        if (selectedPopularity.includes("Most Liked") && recipe.rating < 4.7)
+        if (
+          selectedPopularity.includes("Most Liked") &&
+          recipe.rating < 4.7
+        ) {
           return false;
-        if (selectedPopularity.includes("Most Viewed") && recipe.reviews < 250)
+        }
+        if (
+          selectedPopularity.includes("Most Viewed") &&
+          recipe.reviews < 250
+        ) {
           return false;
+        }
       }
 
       return true;
     });
 
-    // Sorting
+    // Sorting logic
     if (selectedSortBy.includes("Rating (high to low)")) {
       filtered.sort((a, b) => b.rating - a.rating);
     } else if (selectedSortBy.includes("Rating (low to high)")) {
@@ -115,16 +133,22 @@ export function RecipesPage() {
       filtered.sort((a, b) => a.reviews - b.reviews);
     }
 
-    console.log("filteredRecipes: ", filtered);
+    console.log("Filtered and sorted recipes: ", filtered);
     setFilteredAndSortedRecipes(filtered);
-  }, [selectedCategories, selectedPopularity, selectedSortBy, searchQuery]);
+  }, [
+    selectedCategories,
+    searchQuery,
+    selectedPopularity,
+    selectedSortBy,
+    recipes,
+  ]);
 
   useEffect(() => {
     isMobile() ? setShowFilters(false) : setShowFilters(true);
     scrollToTop();
-    setFilteredAndSortedRecipes(recipes);
   }, []);
 
+  console.log("Initial Recipes: ", filteredAndSortedRecipes);
   return (
     <div
       className="min-h-screen py-8 px-4"

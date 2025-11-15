@@ -1,18 +1,16 @@
-import { Moon, Sun, LogIn } from "lucide-react";
+import { Moon, Sun } from "lucide-react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
-import { useEffect, useState } from "react";
-import { getCurrentUser } from "@/services/appwrite";
 import useTheme from "@/store/useTheme";
 import Logo from "./Logo";
 
 export default function Header({}) {
-  const [user, setUser] = useState<{ id: string; email: string } | null>(null);
   const navigate = useNavigate();
   const { toggleDarkMode, darkMode } = useTheme();
 
   const currentUrl = useLocation().pathname.split("/");
   const currentPage = currentUrl[currentUrl.length - 1] || "home";
+  // const [logIn, setLogin] = useState(false);
 
   const navItems = [
     {
@@ -22,20 +20,30 @@ export default function Header({}) {
     {
       label: "All Recipes",
       path: "/recipes",
-    },
+    }
   ];
 
-  useEffect(() => {
-    (async () => {
-      const currentUser = await getCurrentUser();
-      if (!currentUser.$id) {
-        setUser(null);
-        return;
-      }
+  // const loggedInNavItems = [
+  //   {
+  //     label: "Dashboard",
+  //     path: "/dashboard"
+  //   }
+  // ];
 
-      setUser({ id: currentUser.$id, email: currentUser.email });
-    })();
-  }, []);
+  // function handleLogout() {
+  //   logoutUser({});
+  //   navigate("/");
+  //   setLogin(false);
+  // }
+
+  // useEffect(() => {
+  //   if (localStorage.getItem("sessionId")) {
+  //     setLogin(true);
+  //   } else {
+  //     setLogin(false);
+  //   }
+  // }, []);
+
   return (
     <nav
       className="sticky top-0 z-50 border-b"
@@ -73,21 +81,46 @@ export default function Header({}) {
                   {item.label}
                 </NavLink>
               ))}
+              {/* {logIn && loggedInNavItems.map((item) => (
+                <NavLink
+                  key={item.label}
+                  to={item.path}
+                  className="font-['Lato'] font-medium transition-colors"
+                  style={{
+                    color:
+                      currentPage === item.path.replace("/", "") ||
+                      (item.path === "/" && currentPage === "home")
+                        ? "var(--brand-primary)"
+                        : "var(--text-primary)",
+                  }}
+                >
+                  {item.label}
+                </NavLink>
+              ))} */}
             </div>
 
-            {!user && currentPage !== "login" && currentPage !== "signup" && (
+            {/* {!logIn ? (
               <Button
                 onClick={() => navigate("/login")}
-                className="hidden md:flex items-center gap-2 px-4 py-2 rounded-lg font-['Poppins'] font-medium transition-opacity hover:opacity-90"
+                className="hidden md:flex items-center gap-2 px-4 py-2 font-['Poppins'] font-medium transition-opacity hover:opacity-90"
                 style={{
                   backgroundColor: "var(--brand-primary)",
                   color: "var(--bg-primary)",
                 }}
               >
-                <LogIn className="text-slate-50 w-4 h-4" />
+                <LogIn className="text-slate-50 dark:text-orange-950 w-4 h-4" />
                 Login
               </Button>
-            )}
+            ) : (
+              <Button
+                variant="outline"
+                onClick={handleLogout}
+                className="hidden md:flex items-center gap-2 px-4 py-2 font-['Poppins'] font-medium transition-opacity hover:opacity-90"
+              >
+                Logout{" "}
+                <LogOut className="text-slate-50  w-4 h-4" />
+              </Button>
+            )} */}
 
             {/* Dark Mode Toggle */}
             <Button

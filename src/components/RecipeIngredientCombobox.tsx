@@ -69,22 +69,19 @@ export function RecipeIngredientCombobox({
                   key={ingredient.value}
                   value={ingredient.value}
                   onSelect={(currentValue) => {
-                    const findCurrentValue = ingredients?.find(
-                      (item) => item.value === currentValue
-                    );
-                    if (!findCurrentValue) return;
-                    setValue((prev) =>
-                      !prev?.includes(findCurrentValue)
-                        ? [...prev, findCurrentValue]
-                        : prev.filter(
-                            (item) => item.value !== findCurrentValue.value
-                          )
-                    );
+                    console.log(currentValue)
+                    const alreadyExist = values.find(val => val.value === currentValue)
+                    if (!alreadyExist) {
+                      setValue(prev => [...prev, { ...ingredient }])
+                    } else {
+                      setValue(prev => prev.filter(item => item.value !== currentValue))
+                    }
+
                     setOpen(false);
                   }}
                 >
                   {ingredient.label}
-                  {values.includes(ingredient) && (
+                  {values.find(item => item.value === ingredient.value) && (
                     <Check className={cn("ml-auto group:hover:bg-white")} />
                   )}
                 </CommandItem>

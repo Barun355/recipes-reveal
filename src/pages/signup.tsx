@@ -62,7 +62,12 @@ export function SignupPage() {
 
     setErrors(newErrors);
 
-    if (Object.keys(newErrors).length === 0) {
+    if (
+      newErrors.email === "" &&
+      newErrors.username === "" &&
+      newErrors.password === "" &&
+      newErrors.confirmPassword === ""
+    ) {
       // Successful signup - in a real app, this would call an API
       console.log("Signup successful:", formData);
       const user = await createUser({

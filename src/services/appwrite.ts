@@ -43,7 +43,7 @@ export async function getAllRecipes() {
       ? item.feedbacks.reduce((acc: any, feedback: any) => acc + feedback.rating, 0) /
         item.feedbacks.length
       : 0,
-    reviews: item.feedbacks ? item.feedbacks.length : 200,
+    reviews: item.feedbacks ? item.feedbacks.length : 0,
     prepTime: item.prepTime,
     cookTime: item.cookTime,
     calories: item.calories,
@@ -105,7 +105,7 @@ export async function getRecipeById(id: string) {
       ? document.feedbacks.reduce((acc: any, feedback: any) => acc + feedback.rating, 0) /
         document.feedbacks.length
       : 0,
-    reviews: document.feedbacks ? document.feedbacks.length : 200,
+    reviews: document.feedbacks ? document.feedbacks.length : 0,
     prepTime: document.prepTime,
     cookTime: document.cookTime,
     calories: document.calories,
@@ -152,27 +152,33 @@ export async function loginUser({ email, password }: { email: string, password: 
     throw new Error("email and password are required");
   }
 
-  const session = await account.createEmailPasswordSession({ email, password });
+  const user = await account.createEmailPasswordSession({ email, password });
 
-  if (!session.$id) {
-    throw new Error("Failed to create session");
+  localStorage.setItem("sessionId", user.$id)
+  
+  
+  if (!user.$id) {
+    throw new Error("Failed to login user");
   }
 
-  return session;
+  return user;
 }
 
-export async function logoutUser({ sessionId, all=false }: {sessionId: string; all: boolean}) {
+export async function logoutUser({ all=false }: {all?: boolean}) {
+  
   if (all) {
     await account.deleteSessions()
   }
-  account.deleteSession({ sessionId })
+  await account.deleteSession({ sessionId: "current" })
+  localStorage.removeItem("sessionId")
 }
 
 export async function getCurrentUser() {
   const user = await account.get();
 
   if (!user.$id) {
-    throw new Error("No user logged in");
+    console.log("No user logged in");
+    return null
   }
 
   return user;

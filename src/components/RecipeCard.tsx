@@ -20,11 +20,11 @@ export function RecipeCard({ recipe, onClick, featured = false }: RecipeCardInte
       }}
     >
       {/* Image */}
-      <div className="relative aspect-square overflow-hidden">
+      <div className="relative aspect-square overflow-hidden flex justify-center items-center">
         <ImageWithFallback
           src={recipe.previewImage}
           alt={recipe.name}
-          className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+          className="w-[95%] h-[95%] rounded-lg object-cover transition-transform duration-300 group-hover:scale-110"
         />
 
         {/* High Protein Badge */}
