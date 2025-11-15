@@ -1,0 +1,127 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Lato:wght@300;400;600;700&display=swap');
+
+@import "tailwindcss";
+
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+}
+
+:root {
+  /* RecipeReveal Light Mode Colors */
+  --brand-primary: oklch(67% 0.17 65); /* #FF7F00 - Vibrant Orange */
+  --brand-secondary: oklch(59% 0.15 65); /* #E65C00 - Deep Orange */
+  --text-primary: oklch(27% 0 0); /* #333333 - Charcoal Gray */
+  --text-secondary: oklch(68% 0 0); /* #A0A0A0 - Light Gray */
+  --bg-primary: oklch(100% 0 0); /* #FFFFFF - Pure White */
+  --bg-secondary: oklch(98% 0 0); /* #F8F8F8 - Off-White */
+  --color-success: oklch(65% 0.12 140); /* #4CAF50 - Green */
+  --color-error: oklch(60% 0.17 25); /* #FF4444 - Red */
+  --color-info: oklch(60% 0.12 260); /* #2196F3 - Blue */
+  
+  /* Standard tokens for compatibility */
+  --font-size: 16px;
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --card: var(--bg-primary);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-primary);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--bg-primary);
+  --secondary: var(--brand-secondary);
+  --secondary-foreground: var(--bg-primary);
+  --muted: var(--bg-secondary);
+  --muted-foreground: var(--text-secondary);
+  --accent: var(--brand-primary);
+  --accent-foreground: var(--bg-primary);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--bg-primary);
+  --border: rgba(51, 51, 51, 0.1);
+  --input: transparent;
+  --input-background: var(--bg-secondary);
+  --switch-background: #cbced4;
+  --font-weight-medium: 500;
+  --font-weight-normal: 400;
+  --ring: var(--brand-primary);
+  --radius: 0.5rem;
+}
+
+.dark {
+  /* RecipeReveal Dark Mode Colors */
+  --brand-primary: oklch(73% 0.16 65); /* #FF9800 - Brighter Orange */
+  --brand-secondary: oklch(81% 0.09 70); /* #FFB74D - Lighter Orange */
+  --text-primary: oklch(98% 0 0); /* #F8F8F8 - Off-White */
+  --text-secondary: oklch(78% 0 0); /* #B0B0B0 - Medium Gray */
+  --bg-primary: oklch(18% 0 0); /* #1E1E1E - Dark Charcoal */
+  --bg-secondary: oklch(25% 0 0); /* #2A2A2A - Slightly Lighter Dark */
+  --color-success: oklch(76% 0.08 140); /* #81C784 - Lighter Green */
+  --color-error: oklch(72% 0.08 25); /* #EF9A9A - Lighter Red */
+  --color-info: oklch(76% 0.06 260); /* #90CAF9 - Lighter Blue */
+  
+  /* Standard tokens for compatibility */
+  --background: var(--bg-primary);
+  --foreground: var(--text-primary);
+  --card: var(--bg-secondary);
+  --card-foreground: var(--text-primary);
+  --popover: var(--bg-secondary);
+  --popover-foreground: var(--text-primary);
+  --primary: var(--brand-primary);
+  --primary-foreground: var(--bg-primary);
+  --secondary: var(--brand-secondary);
+  --secondary-foreground: var(--bg-primary);
+  --muted: var(--bg-secondary);
+  --muted-foreground: var(--text-muted-secondary);
+  --accent: var(--brand-primary);
+  --accent-foreground: var(--text-secondary);
+  --destructive: var(--color-error);
+  --destructive-foreground: var(--text-primary);
+  --border: rgba(248, 248, 248, 0.1);
+  --input: var(--bg-secondary);
+  --ring: var(--brand-primary);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
