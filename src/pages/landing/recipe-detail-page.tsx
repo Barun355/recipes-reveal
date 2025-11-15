@@ -14,7 +14,6 @@ import { Button } from "../../components/ui/button";
 import { useNavigate, useParams } from "react-router-dom";
 import ImageWithFallback from "../../components/figma/ImageWithFallback";
 import type { Recipes } from "@/types";
-import useRecipes from "@/store/useRecipes";
 import { getRecipeById } from "@/services/appwrite";
 import { scrollToTop } from "@/lib/utils";
 import Feedback from "@/components/Feedback";
@@ -23,8 +22,6 @@ export function RecipeDetailPage() {
   const [isSaved, setIsSaved] = useState(false);
   const [isLiked, setIsLiked] = useState(false);
   const [recipe, setRecipe] = useState<Recipes>();
-
-  const { recipes } = useRecipes();
 
   const { id } = useParams();
   const navigate = useNavigate();

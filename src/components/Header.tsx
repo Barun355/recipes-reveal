@@ -1,11 +1,10 @@
-import { Moon, Sun, ChefHat, LogIn } from "lucide-react";
+import { Moon, Sun, LogIn } from "lucide-react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { getCurrentUser } from "@/services/appwrite";
 import useTheme from "@/store/useTheme";
 import Logo from "./Logo";
-import { isMobile } from "@/lib/utils";
 
 export default function Header({}) {
   const [user, setUser] = useState<{ id: string; email: string } | null>(null);

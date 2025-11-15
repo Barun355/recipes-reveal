@@ -1,4 +1,4 @@
-import { Check, Search, X } from "lucide-react";
+import { Check, Search } from "lucide-react";
 
 import { cn } from "@/lib/utils";
 import {
